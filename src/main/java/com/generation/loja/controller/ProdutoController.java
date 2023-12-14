@@ -21,36 +21,42 @@ import com.generation.loja.repository.ProdutoRepository;
 public class ProdutoController {
 
 	@Autowired
-	private ProdutoRepository produtoRepository;
+    private ProdutoRepository produtoRepository;
 
-	@GetMapping
-	public List<Produto> listarProdutos() {
-		return produtoRepository.findAll();
-	}
+    @GetMapping
+    public List<Produto> listarProdutos() {
+        return produtoRepository.findAll();
+    }
 
-	@PostMapping
-	public Produto criarProduto(@RequestBody Produto produto) {
-		return produtoRepository.save(produto);
-	}
+    @PostMapping
+    public Produto criarProduto(@RequestBody Produto produto) {
+        return produtoRepository.save(produto);
+    }
 
-	@GetMapping("/{id}")
-	public Produto buscarProduto(@PathVariable Long id) {
-		return produtoRepository.findById(id).orElse(null);
-	}
+    @GetMapping("/{id}")
+    public Produto buscarProduto(@PathVariable Long id) {
+        return produtoRepository.findById(id).orElse(null);
+    }
 
-	@PutMapping("/{id}")
-	public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produto) {
-		produto.setId(id);
-		return produtoRepository.save(produto);
-	}
+    @PutMapping("/{id}")
+    public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produto) {
+        produto.setId(id);
+        return produtoRepository.save(produto);
+    }
 
-	@DeleteMapping("/{id}")
-	public void deletarProduto(@PathVariable Long id) {
-		produtoRepository.deleteById(id);
-	}
+    @DeleteMapping("/{id}")
+    public void deletarProduto(@PathVariable Long id) {
+        produtoRepository.deleteById(id);
+    }
 
-	@GetMapping("/menor-que/{valor}")
-	public List<Produto> listarProdutosMenorQue(@PathVariable BigDecimal valor) {
-		return produtoRepository.findByPrecoLessThan(valor);
-	}
+    @GetMapping("/menor-que/{valor}")
+    public List<Produto> listarProdutosMenorQue(@PathVariable BigDecimal valor) {
+        return produtoRepository.findByPrecoLessThan(valor);
+    }
+
+    @GetMapping("/contendo/{nome}")
+    public List<Produto> buscarProdutosPorNomeContendoIgnoreCase(@PathVariable String nome) {
+        return produtoRepository.findAllByNomeContainingIgnoreCase(nome);
+    }
 }
+

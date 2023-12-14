@@ -9,7 +9,9 @@ import org.springframework.data.repository.query.Param;
 import com.generation.loja.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long>  {
-	public List <Produto> findAllByTituloContainingIgnoreCase(@Param("preço") BigDecimal preco);
+	public List <Produto> findAllByNomeContainingIgnoreCase(@Param("nome") String nome);
 	List<Produto> findByPrecoLessThan(BigDecimal valor);
+	List<Produto> findByPrecoGreaterThan(BigDecimal valor);
+	
 
 }
