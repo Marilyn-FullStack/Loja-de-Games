@@ -48,7 +48,10 @@ public class ProdutoController {
     public void deletarProduto(@PathVariable Long id) {
         produtoRepository.deleteById(id);
     }
-
+    @GetMapping("/maior-que/{valor}")
+    public List<Produto> findByPrecoGreaterThan(@PathVariable BigDecimal valor) {
+        return produtoRepository.findByPrecoGreaterThan(valor);
+    }
     @GetMapping("/menor-que/{valor}")
     public List<Produto> listarProdutosMenorQue(@PathVariable BigDecimal valor) {
         return produtoRepository.findByPrecoLessThan(valor);
