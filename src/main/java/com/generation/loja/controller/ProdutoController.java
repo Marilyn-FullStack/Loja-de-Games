@@ -49,12 +49,12 @@ public class ProdutoController {
         produtoRepository.deleteById(id);
     }
     @GetMapping("/maior-que/{valor}")
-    public List<Produto> listarProdutosMaiorQue(@PathVariable BigDecimal valor) {
-        return produtoRepository.findByPrecoGreaterThan(valor);
+    public List<Produto> listarProdutosMaiorQue(@PathVariable BigDecimal preco) {
+        return produtoRepository.findByPrecoGreaterThan(preco);
     }
     @GetMapping("/menor-que/{valor}")
-    public List<Produto> listarProdutosMenorQue(@PathVariable BigDecimal valor) {
-        return produtoRepository.findByPrecoLessThan(valor);
+    public List<Produto> listarProdutosMenorQue(@PathVariable BigDecimal preco) {
+        return produtoRepository.findByPrecoLessThan(preco);
     }
 
     @GetMapping("/contendo/{nome}")

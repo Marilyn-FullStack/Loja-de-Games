@@ -13,8 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -34,15 +32,13 @@ public class Produto {
 
     @Column(length = 10)
     @NotNull(message = "O atributo preço é Obrigatório!")
-    @DecimalMin(value = "1.0", message = "O atributo preço deve ser maior ou igual a 1.0")
-    @DecimalMax(value = "10.0", message = "O atributo preço deve ser menor ou igual a 10.0")
     private BigDecimal preco;
     
     @UpdateTimestamp
     private LocalDateTime date;
     
     @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
 	public Long getId() {
