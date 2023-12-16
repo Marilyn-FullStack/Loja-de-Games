@@ -47,4 +47,5 @@ public class CategoriaController {
     public void deletarCategoria(@PathVariable Long id) {
         categoriaRepository.deleteById(id);
     }
+    
 }

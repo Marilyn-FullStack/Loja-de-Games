@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +33,6 @@ public class Produto {
     @Size(min = 5, max = 50, message = "O atributo nome deve conter no mínimo 5 e no máximo 50 caracteres")
     private String nome;
 
-    @Column
     @Digits(integer = 6, fraction = 2, message = "O preço deve ter no máximo 8 dígitos, sendo 6 inteiros e 2 decimais.")
     @NotNull(message = "O atributo preço é obrigatório!")
     private BigDecimal preco;
@@ -40,6 +41,7 @@ public class Produto {
     private LocalDateTime date;
     
     @ManyToOne
+    @JsonIgnoreProperties({"produtos"})
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
@@ -75,6 +77,13 @@ public class Produto {
 		this.date = date;
 	}
 
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
     
 }
 
