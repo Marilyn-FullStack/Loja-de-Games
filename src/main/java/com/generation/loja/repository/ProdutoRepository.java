@@ -11,7 +11,7 @@ import com.generation.loja.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-	public List<Produto> findAllByNomeContainingIgnoreCase(@Param("nome") String nome);
+	List<Produto> findAllByNomeContainingIgnoreCase(@Param("Produto") String nome);
 
 	List<Produto> findByPrecoLessThan(BigDecimal preco);
 
