@@ -3,6 +3,8 @@ package com.generation.loja.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,32 +21,45 @@ import com.generation.loja.repository.CategoriaRepository;
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+	 @Autowired
+	    private CategoriaRepository categoriaRepository;
 
-    @GetMapping
-    public List<Categoria> listarCategorias() {
-        return categoriaRepository.findAll();
-    }
+	    @GetMapping
+	    public ResponseEntity<List<Categoria>> listarCategorias() {
+	        List<Categoria> categorias = categoriaRepository.findAll();
+	        return ResponseEntity.ok(categorias);
+	    }
 
-    @PostMapping
-    public Categoria criarCategoria(@RequestBody Categoria categoria) {
-        return categoriaRepository.save(categoria);
-    }
+	    @PostMapping
+	    public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
+	        Categoria novaCategoria = categoriaRepository.save(categoria);
+	        return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
+	    }
 
-    @GetMapping("/{id}")
-    public Categoria buscarCategoria(@PathVariable Long id) {
-        return categoriaRepository.findById(id).orElse(null);
-    }
+	    @GetMapping("/{id}")
+	    public ResponseEntity<Categoria> buscarCategoriaPorId(@PathVariable Long id) {
+	        Categoria categoria = categoriaRepository.findById(id).orElse(null);
+	        return categoria != null ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
+	    }
 
-    @PutMapping("/{id}")
-    public Categoria atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
-        categoria.setId(id);
-        return categoriaRepository.save(categoria);
-    }
+	    @PutMapping("/{id}")
+	    public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
+	        // Verificar se a categoria existe antes de tentar atualizar
+	        if (categoriaRepository.existsById(id)) {
+	            categoria.setId(id);
+	            Categoria categoriaAtualizada = categoriaRepository.save(categoria);
+	            return ResponseEntity.ok(categoriaAtualizada);
+	        }
+	        return ResponseEntity.notFound().build();
+	    }
 
-    @DeleteMapping("/{id}")
-    public void deletarCategoria(@PathVariable Long id) {
-        categoriaRepository.deleteById(id);
-    }
-}
+	    @DeleteMapping("/{id}")
+	    public ResponseEntity<Void> deletarCategoria(@PathVariable Long id) {
+	        // Verificar se a categoria existe antes de tentar deletar
+	        if (categoriaRepository.existsById(id)) {
+	            categoriaRepository.deleteById(id);
+	            return ResponseEntity.noContent().build();
+	        }
+	        return ResponseEntity.notFound().build();
+	    }
+	}
