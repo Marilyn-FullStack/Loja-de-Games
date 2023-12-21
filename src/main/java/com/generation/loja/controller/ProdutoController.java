@@ -75,14 +75,14 @@ public class ProdutoController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/maior-que/{valor}")
-	public List<Produto> listarProdutosMaiorQue(@PathVariable BigDecimal valor) {
-		return produtoRepository.findByPrecoGreaterThan(valor);
+	@GetMapping("/maior-que/{preco}")
+	public List<Produto> listarProdutosMaiorQue(@PathVariable BigDecimal preco) {
+		return produtoRepository.findByPrecoGreaterThan(preco);
 	}
 
-	@GetMapping("/menor-que/{valor}")
-	public List<Produto> listarProdutosMenorQue(@PathVariable BigDecimal valor) {
-		return produtoRepository.findByPrecoLessThan(valor);
+	@GetMapping("/menor-que/{preco}")
+	public List<Produto> listarProdutosMenorQue(@PathVariable BigDecimal preco) {
+		return produtoRepository.findByPrecoLessThan(preco);
 	}
 
 	@GetMapping("/contendo/{nome}")

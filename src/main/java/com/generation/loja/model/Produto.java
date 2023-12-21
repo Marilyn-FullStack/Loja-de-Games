@@ -44,6 +44,11 @@ public class Produto {
     @JsonIgnoreProperties({"produtos"})
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+    
+    @ManyToOne
+	@JsonIgnoreProperties("produtos")
+	private Usuario usuario;
+
 
 	public Long getId() {
 		return id;
